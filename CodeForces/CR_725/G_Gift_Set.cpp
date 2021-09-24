@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long
-int a, b;
+int x, y, a, b;
 ll solve(int x, int y)
 {
     if (x <= 0 || y <= 0)
@@ -19,6 +19,30 @@ ll solve(int x, int y)
 
     return max(m, n);
 }
+int checkMid(ll n)
+{
+    ll lo = 0, hi = n;
+    while (lo <= hi)
+    {
+        ll s1 = (hi + lo) / 2;
+        ll s2 = n - s1;
+        ll t1 = a * s1 + b * s2;
+        ll t2 = a * s2 + b * s1;
+        if (t1 <= x && t2 <= y)
+        {
+            return 1;
+        }
+        else if (t1 > x)
+        {
+            hi = s1 - 1;
+        }
+        else
+        {
+            lo = s1 + 1;
+        }
+    }
+    return 0;
+}
 int main()
 {
     ios_base::sync_with_stdio(false);
@@ -27,18 +51,26 @@ int main()
     cin >> t;
     while (t--)
     {
-        int x, y;
         cin >> x >> y >> a >> b;
-        ll ans;
-        if (x == y)
+        if (a < b)
+            swap(a, b);
+        if (x < y)
+            swap(x, y);
+        ll ans = 0;
+        ll lo = 1, hi = max(x, y);
+        while (lo <= hi)
         {
-            if (x >= a && x >= b)
-                ans = min(x / a, x / b);
+            ll mid = (hi + lo) / 2;
+            if (checkMid(mid))
+            {
+                ans = max(ans, mid);
+                lo = mid + 1;
+            }
             else
-                ans = 0;
+            {
+                hi = mid - 1;
+            }
         }
-        else
-            ans = solve(x, y);
         cout << ans << endl;
     }
 }
