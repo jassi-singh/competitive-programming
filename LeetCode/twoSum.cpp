@@ -3,17 +3,17 @@ using namespace std;
 #define ll long long
 vector<int> solve(vector<int> nums, int target)
 {
-    for (int i = 0; i < nums.size(); i++)
+    int l = 0, r = nums.size() - 1;
+    while (l < r)
     {
-        auto it = find(nums.begin() + i + 1, nums.end(), target - nums[i]);
-        if (it != nums.end() && i != int(it - nums.begin()))
-        {
-            vector<int> ans{i, int(it - nums.begin())};
-            return ans;
-        }
+        if (nums[l] + nums[r] == target)
+            return {l + 1, r + 1};
+        else if (nums[l] + nums[r] > target)
+            r--;
+        else
+            l++;
     }
-    vector<int> ans{0, 0};
-    return ans;
+    return {};
 }
 int main()
 {
