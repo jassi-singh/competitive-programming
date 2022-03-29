@@ -3,15 +3,22 @@ using namespace std;
 #define ll long long
 void solve()
 {
-  ll n, m, k, ans = 0;
-  cin >> n >> m >> k;
-  vector<ll> e(n);
-  for (int i = 0; i < n; i++)
+  ll n, k, ans = -1;
+  cin >> n >> k;
+
+  ll l = 0;
+  ll h = k;
+  while (l <= h)
   {
-    cin >> e[i];
+    ll x = (l + h) / 2;
+    if (x * (x + 1) / 2 + (k - x) * x >= n - 1 + x)
+    {
+      ans = x;
+      h = x - 1;
+    }
+    else
+      l = x + 1;
   }
-  sort(e.rbegin(), e.rend());
-  ans = m / (k + 1) * (e[0] * k + e[1]) + m % (k + 1) * e[0];
   cout << ans << endl;
 }
 int main()
