@@ -1,33 +1,27 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long
+#define ull unsigned ll
 void solve()
 {
   int t = 1;
   cin >> t;
-  vector<bool> a(100000009, 1);
-  a[0] = 0;
-  for (ll i = 2; i * i <= 100000009; i++)
-  {
-    if (a[i - 1])
-    {
-      for (ll j = i * i; j <= 100000009; j += i)
-      {
-        a[j - 1] = 0;
-      }
-    }
-  }
-
   while (t--)
   {
-    ll l, h;
-    cin >> l >> h;
-    for (ll i = l; i <= h; i++)
+    ull n, k, ans = 0, mod = 1000000007;
+    cin >> n >> k;
+    bitset<32> b(k);
+    ull p = 1;
+    for (ull i = 0; i < 32; i++)
     {
-      if (a[i - 1])
-        cout << i << endl;
+      if (b[i] == 1)
+      {
+        ans = (ans + p) % mod;
+      }
+      p *= n;
+      p %= mod;
     }
-    cout << endl;
+    cout << ans << endl;
   }
 }
 int main()
