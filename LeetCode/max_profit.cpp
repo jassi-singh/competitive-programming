@@ -3,13 +3,12 @@ using namespace std;
 #define ll long long
 int solve(vector<int> &prices)
 {
-    int b = prices[0], profit = 0;
-    for (int price : prices)
+    int profit = 0, buy = prices[0];
+    for (int i = 1; i < prices.size(); i++)
     {
-        if (price - b > 0)
-            profit = max(profit, price - b);
-        else
-            b = price;
+        if(buy>prices[i])
+            buy = prices[i];
+        profit = max(profit,prices[i]-buy);
     }
     return profit;
 }
